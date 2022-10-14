@@ -36,7 +36,7 @@ const Home: NextPage = (/*{
         }).then(e => {
           setAudioLoaded(true);
         }).catch((err) => {
-          toast.error("Error while loading audio", {
+          toast.info("Error while loading audio", {
             theme: "dark",
             position: "bottom-right",
           });
