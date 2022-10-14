@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import Head from "next/head";
+import Image from "next/image";
 import type { NextPage } from "next";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -11,8 +13,21 @@ import {
 
 import styles from "../styles/Home.module.scss";
 import { generateTemplate } from "../utils/generateTemplate";
-import Image from "next/image";
-import Head from "next/head";
+
+interface MusicaDataTypes {
+  channels: [
+    {
+      channel_id: number;
+      name: string;
+      artist: string;
+      title: string;
+      cover: string;
+      color: string;
+      fontcolor: string;
+      stream_url: string;
+    }
+  ]
+}
 
 const Home: NextPage = (/*{
   audio,
@@ -28,6 +43,7 @@ const Home: NextPage = (/*{
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [volumeAudio, setVolumeAudio] = useState(0.3);
   const [audioLoaded, setAudioLoaded] = useState(false);
+  const [musicsData, setMusicsData] = useState<MusicaDataTypes | null>(null);
 
   useEffect(() => {
     setAudio(null);
@@ -36,6 +52,27 @@ const Home: NextPage = (/*{
 
     async function loadAudio() {
       try {
+        await axios.create({
+          baseURL: "https://api.ilovemusic.team",
+        }).get("traffic", {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*"
+          },
+        }).then((response) => {
+          const { data } = response;
+          setMusicsData(data);
+          setAudio(new Audio(data.channels[0].stream_url));
+          setIsLoading(false);
+        }).catch((error) => {
+          console.log(error);
+          toast.error("Não foi possível carregar a rádio, tente novamente mais tarde.", {
+            theme: "dark",
+            position: "bottom-right",
+          });
+          setIsLoading(false);
+        });
+
         axios.get("https://streams.iloveradio.de/iloveradio1.mp3", {
           responseType: "blob"
         }).then(e => {
@@ -189,6 +226,10 @@ const Home: NextPage = (/*{
               >
                 {Math.floor(volumeAudio * 100).toFixed(0)}%
               </span>
+
+              <select name="musics" id="musics">
+                
+              </select>
             </motion.div>
           )}
           <form
