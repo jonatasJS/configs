@@ -1,0 +1,42 @@
+html,
+body,
+#__next {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  height: auto;
+  min-width: 100vw;
+  max-width: 100vw;
+  overflow-x: hidden;
+  font-family: 'Inter', 'Ubuntu', sans-serif;
+}
+
+.Toastify,
+.Toastify__toast-body {
+  z-index: 99999;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: white;
+    background: black;
+  }
+}
