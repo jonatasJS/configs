@@ -12,6 +12,7 @@ import {
 import styles from "../styles/Home.module.scss";
 import { generateTemplate } from "../utils/generateTemplate";
 import Image from "next/image";
+import Head from "next/head";
 
 const Home: NextPage = (/*{
   audio,
@@ -29,11 +30,16 @@ const Home: NextPage = (/*{
   const [audioLoaded, setAudioLoaded] = useState(false);
 
   useEffect(() => {
+    setAudio(null);
+    setIsLoading(true);
+    setIsPlayingMusic(false);
+
     async function loadAudio() {
       try {
         axios.get("https://streams.iloveradio.de/iloveradio1.mp3", {
-          responseType: "blob",
+          responseType: "blob"
         }).then(e => {
+          console.log(e.data);
           setAudioLoaded(true);
         }).catch((err) => {
           toast.info("Error while loading audio", {
@@ -69,6 +75,11 @@ const Home: NextPage = (/*{
 
   return (
     <>
+    <Head>
+      <title>Formulário de configuração</title>
+      <meta name="description" content="Formulário de configuração" />
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
       {isLoading ? (
         <motion.div
           initial={{ opacity: 0 }}
