@@ -49,6 +49,14 @@
     color: #fff;
   }
 
+  select {
+    @include prefix("user-select", "none");
+    position: absolute;
+    top: 170px;
+    right: 10px;
+    width: 15%;
+  }
+
   @include prefix("user-select", "none");
 
   @media (min-width: 1000px) {

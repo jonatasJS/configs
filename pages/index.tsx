@@ -14,29 +14,22 @@ import {
 import styles from "../styles/Home.module.scss";
 import { generateTemplate } from "../utils/generateTemplate";
 
-interface MusicaDataTypes {
-  channels: [
-    {
-      channel_id: number;
-      name: string;
-      artist: string;
-      title: string;
-      cover: string;
-      color: string;
-      fontcolor: string;
-      stream_url: string;
-    }
-  ]
+interface MusicProps {
+  channel_id: number;
+  name: string;
+  artist: string;
+  title: string;
+  cover: string;
+  color: string;
+  fontcolor: string;
+  stream_url: string;
 }
 
-const Home: NextPage = (/*{
-  audio,
-}: {
-  audio: {
-    src: string;
-    name: string;
-  };
-}*/) => {
+interface MusicaDataTypes {
+  channels: MusicProps[];
+}
+
+function Home({ dataAudio }: { dataAudio: MusicaDataTypes }): JSX.Element {
   const [isLoading, setIsLoading] = useState(true);
   const [isWiFi, setIsWiFi] = useState(false);
   const [isPlayingMusic, setIsPlayingMusic] = useState(false);
@@ -52,39 +45,21 @@ const Home: NextPage = (/*{
 
     async function loadAudio() {
       try {
-        await axios.create({
-          baseURL: "https://api.ilovemusic.team",
-        }).get("traffic", {
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*"
-          },
-        }).then((response) => {
-          const { data } = response;
-          setMusicsData(data);
-          setAudio(new Audio(data.channels[0].stream_url));
-          setIsLoading(false);
-        }).catch((error) => {
-          console.log(error);
-          toast.error("Não foi possível carregar a rádio, tente novamente mais tarde.", {
-            theme: "dark",
-            position: "bottom-right",
+        axios
+          .get("https://streams.iloveradio.de/iloveradio1.mp3", {
+            responseType: "blob",
+          })
+          .then((e) => {
+            console.log(e.data);
+            setAudioLoaded(true);
+          })
+          .catch((err) => {
+            toast.info("Error while loading audio", {
+              theme: "dark",
+              position: "bottom-right",
+            });
+            setAudioLoaded(false);
           });
-          setIsLoading(false);
-        });
-
-        axios.get("https://streams.iloveradio.de/iloveradio1.mp3", {
-          responseType: "blob"
-        }).then(e => {
-          console.log(e.data);
-          setAudioLoaded(true);
-        }).catch((err) => {
-          toast.info("Error while loading audio", {
-            theme: "dark",
-            position: "bottom-right",
-          });
-          setAudioLoaded(false);
-        })
         const audio = new Audio(
           "https://streams.iloveradio.de/iloveradio1.mp3"
         );
@@ -112,11 +87,11 @@ const Home: NextPage = (/*{
 
   return (
     <>
-    <Head>
-      <title>Formulário de configuração</title>
-      <meta name="description" content="Formulário de configuração" />
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
+      <Head>
+        <title>Formulário de configuração</title>
+        <meta name="description" content="Formulário de configuração" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       {isLoading ? (
         <motion.div
           initial={{ opacity: 0 }}
@@ -227,9 +202,7 @@ const Home: NextPage = (/*{
                 {Math.floor(volumeAudio * 100).toFixed(0)}%
               </span>
 
-              <select name="musics" id="musics">
-                
-              </select>
+              {/* <select name="musics" id="musics"></select> */}
             </motion.div>
           )}
           <form
@@ -355,14 +328,40 @@ const Home: NextPage = (/*{
       )}
     </>
   );
-};
+}
 
 export default Home;
 
 // generate a static version of the page
 export async function getStaticProps() {
+  async function loadAudios() {
+    return await axios
+      .create({
+        baseURL: "https://api.ilovemusic.team",
+      })
+      .get("traffic", {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+      .then((response) => {
+        const { data } = response;
+        console.log(data);
+        return data;
+      })
+      .catch((error) => {
+        console.log(error);
+        return error;
+      });
+  }
+
+  const dataAudio = await loadAudios();
+
   return {
-    props: {},
-    revalidate: 60, // In seconds
+    props: {
+      dataAudio,
+    },
+    revalidate: 60 * 60 * 24, // 24 hours
   };
 }
