@@ -8,6 +8,7 @@ import Image from "next/image";
 
 import styles from "../../styles/Episode.module.scss";
 import Link from "next/link";
+import Head from "next/head";
 
 interface MusicProps {
   channel_id: number;
@@ -36,6 +37,9 @@ export default function Episode({ channels }: MusicaDataTypes) {
 
   return (
     <div className={styles.episode}>
+      <Head>
+        <title>{music[0].title}</title>
+      </Head>
       <div className={styles.thumbnailContainer}>
         <Link href="/">
           <button type="button">
