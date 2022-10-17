@@ -53,6 +53,13 @@ export default function Episode({ channels }: MusicaDataTypes) {
         </button>
       </div>
 
+      <audio
+        src={music[0]?.stream_url || ""}
+        autoPlay
+        controls
+        style={{ width: "100%" }}
+      />a
+
       <header
         style={{
           color: music[0]?.color || "",
