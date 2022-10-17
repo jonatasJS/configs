@@ -38,7 +38,7 @@ export default function Episode({ channels }: MusicaDataTypes) {
   return (
     <div className={styles.episode}>
       <Head>
-        <title>{music[0]?agr simmmm.title ? music[0].title : ""}</title>
+        <title>{music[0]?.title ? music[0].title : ""}</title>
       </Head>
       <div className={styles.thumbnailContainer}>
         <Link href="/">
