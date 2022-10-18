@@ -33,7 +33,7 @@ interface MusicaDataTypes {
 export default function Episode({ channels }: MusicaDataTypes) {
   const [music, setMusic] = useState<MusicProps[]>([] as MusicProps[]);
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [progress, setProgress] = useState(0);
   const [liked, setLiked] = useState(false);
 
@@ -134,7 +134,9 @@ export default function Episode({ channels }: MusicaDataTypes) {
           */}
           <div className={styles.episodePlayerRange}>
             <span>
-              {music[0]?.stream_url ? convertDurationToTimeString(0) : ""}
+              {convertDurationToTimeString(
+                Math.floor(audioRef.current?.currentTime || 0)
+              )}
             </span>
             <div className={styles.episodePlayerRangeBar}>
               <div
@@ -146,12 +148,14 @@ export default function Episode({ channels }: MusicaDataTypes) {
               <div
                 className={styles.episodePlayerRangeBarThumb}
                 style={{
-                  transform: `translateX(${music[0]?.stream_url ? 0 : 10}%)`,
+                  transform: `translateX(${(audioRef.current?.currentTime || 0) / 100 * 100}%)`,
                 }}
               />
             </div>
             <span>
-              {music[0]?.stream_url ? convertDurationToTimeString(0) : ""}
+              {convertDurationToTimeString(
+                Math.floor(audioRef.current?.duration || 0)
+              )}
             </span>
           </div>
 
@@ -160,6 +164,14 @@ export default function Episode({ channels }: MusicaDataTypes) {
             controls
             autoPlay
             ref={audioRef}
+            onPlay={() => setIsPlaying(true)}
+            onPause={() => setIsPlaying(false)}
+            onLoadedMetadata={() => {
+              if (audioRef.current) {
+                const duration = Math.floor(audioRef.current.duration);
+                setProgress(duration);
+              }
+            }}
           />
         </div>
       </div>
