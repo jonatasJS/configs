@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { GetStaticPaths, GetStaticProps } from "next";
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
-import { convertDurationToTimeString } from "../../utils/convertDurationToTimeString";
+import { convertDurationToTimeString } from "../../../utils/convertDurationToTimeString";
 import {
   HiPlay as PlayIcon,
   HiHeart as HeartIcon,
@@ -14,7 +14,7 @@ import {
   HiArrowNarrowLeft as ArrowLeftIcon,
 } from "react-icons/hi";
 
-import styles from "../../styles/Episode.module.scss";
+import styles from "../../../styles/Episode.module.scss";
 
 interface MusicProps {
   channel_id: number;
@@ -55,9 +55,7 @@ export default function Episode({ channels }: MusicaDataTypes) {
       </Head>
       <div className={styles.episodeContainer}>
         <div className={styles.episodeHeader}>
-          <Link href="" onClick={() => {
-            router.back();
-          }}>
+          <Link href="/musicas">
             <a>
               <ArrowLeftIcon size={32} color="#fff" />
             </a>

@@ -33,7 +33,7 @@ export default function Musica({ channels }: { channels: MusicProps[] }) {
 
         <div className={styles.grid}>
           {channels?.map((channel) => (
-            <Link href={`/${channel.channel_id}`} key={channel.channel_id}>
+            <Link href={`/musicas/${channel.channel_id}`} key={channel.channel_id}>
               <a className={styles.card}>
                 <img src={channel.cover} alt={channel.title} />
                 <h3>{channel.title}</h3>
