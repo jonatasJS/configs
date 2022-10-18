@@ -57,6 +57,7 @@ export default function Episode({ channels }: MusicaDataTypes) {
 
           <div className={styles.episodeHeaderImage}>
             <Image
+              blurDataURL={music[0]?.cover ? music[0].cover : ""}
               width={350}
               height={350}
               src={music[0]?.cover ? music[0].cover : ""}
