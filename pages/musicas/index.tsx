@@ -4,6 +4,7 @@ import Link from "next/link";
 import axios from "axios";
 
 import styles from "../../styles/Musicas.module.scss";
+import Image from "next/image";
 
 interface MusicProps {
   channel_id: number;
@@ -35,7 +36,10 @@ export default function Musica({ channels }: { channels: MusicProps[] }) {
           {channels?.map((channel) => (
             <Link href={`/musicas/${channel.channel_id}`} key={channel.channel_id}>
               <a className={styles.card}>
-                <img src={channel.cover} alt={channel.title} />
+                <Image
+                  src={channel.cover}
+                  alt={channel.title}
+                />
                 <h3>{channel.title}</h3>
                 <p>{channel.artist}</p>
               </a>
