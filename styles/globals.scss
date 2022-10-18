@@ -1,6 +1,7 @@
 html,
 body,
 #__next {
+  color-scheme: dark;
   position: relative;
   padding: 0;
   margin: 0;
@@ -14,6 +15,8 @@ body,
   min-width: 100vw;
   max-width: 100vw;
   overflow-x: hidden;
+  color: white;
+  background: black;
   font-family: 'Inter', 'Ubuntu', sans-serif;
 }
 
