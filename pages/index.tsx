@@ -10,9 +10,11 @@ import {
   RiSpeaker2Fill as SpeakerActive,
   RiSpeaker2Line as SpeakerInactive,
 } from "react-icons/ri";
+import { HiMusicNote as Music } from "react-icons/hi";
 
 import styles from "../styles/Home.module.scss";
 import { generateTemplate } from "../utils/generateTemplate";
+import Link from "next/link";
 
 interface MusicProps {
   channel_id: number;
@@ -202,7 +204,22 @@ function Home({ dataAudio }: { dataAudio: MusicaDataTypes }): JSX.Element {
                 {Math.floor(volumeAudio * 100).toFixed(0)}%
               </span>
 
-              {/* <select name="musics" id="musics"></select> */}
+              {/* botão que leva para a pagina onde fica as lista de musicas */}
+              <Link href="/musicas">
+                <a
+                  style={{
+                    cursor: "pointer",
+                    color: "#fff",
+                    position: "absolute",
+                    top: "-10px",
+                    left: "10px",
+                    height: "32px",
+                    width: "32px",
+                  }}
+                >
+                  <Music size={32} />
+                </a>
+              </Link>
             </motion.div>
           )}
           <form

@@ -44,7 +44,10 @@ export default function Episode({ channels }: MusicaDataTypes) {
   return (
     <div className={styles.episode}>
       <Head>
-        <link rel="shortcut icon" href={music[0]?.cover ? music[0]?.cover : ""} />
+        <link
+          rel="shortcut icon"
+          href={music[0]?.cover ? music[0]?.cover : ""}
+        />
         <title>{music[0]?.title ? music[0].title : ""}</title>
       </Head>
       <div className={styles.episodeContainer}>
@@ -148,13 +151,13 @@ export default function Episode({ channels }: MusicaDataTypes) {
               <div
                 className={styles.episodePlayerRangeBarThumb}
                 style={{
-                  transform: `translateX(${(audioRef.current?.currentTime || 0) / 100 * 100}%)`,
+                  transform: `translateX(0%)`,
                 }}
               />
             </div>
             <span>
               {convertDurationToTimeString(
-                Math.floor(audioRef.current?.duration || 0)
+                Math.floor(audioRef.current?.currentTime || 0)
               )}
             </span>
           </div>
@@ -170,6 +173,12 @@ export default function Episode({ channels }: MusicaDataTypes) {
               if (audioRef.current) {
                 const duration = Math.floor(audioRef.current.duration);
                 setProgress(duration);
+              }
+            }}
+            onTimeUpdate={() => {
+              if (audioRef.current) {
+                const currentTime = Math.floor(audioRef.current.currentTime);
+                setProgress(currentTime);
               }
             }}
           />
