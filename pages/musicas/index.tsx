@@ -1,10 +1,12 @@
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 
 import axios from "axios";
 
+import { HiArrowNarrowLeft as ArrowLeftIcon } from "react-icons/hi";
+
 import styles from "../../styles/Musicas.module.scss";
-import Image from "next/image";
 
 interface MusicProps {
   channel_id: number;
@@ -30,11 +32,22 @@ export default function Musica({ channels }: { channels: MusicProps[] }) {
       </Head>
 
       <main className={styles.main}>
+        {/* 
+          button para voltar para a home
+        */}
+        <Link href="/">
+          <a className={styles.backHome}>
+            <ArrowLeftIcon size={32} color="#fff" />
+          </a>
+        </Link>
         <h1 className={styles.title}>Musicas</h1>
 
         <div className={styles.grid}>
           {channels?.map((channel) => (
-            <Link href={`/musicas/${channel.channel_id}`} key={channel.channel_id}>
+            <Link
+              href={`/musicas/${channel.channel_id}`}
+              key={channel.channel_id}
+            >
               <a className={styles.card}>
                 <Image
                   width={300}
@@ -65,9 +78,7 @@ export default function Musica({ channels }: { channels: MusicProps[] }) {
 }
 
 export async function getStaticProps() {
-  const response = await axios.get(
-    "https://api.ilovemusic.team/traffic"
-  );
+  const response = await axios.get("https://api.ilovemusic.team/traffic");
 
   const { channels } = response.data;
 
