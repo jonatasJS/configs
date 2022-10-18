@@ -1,11 +1,12 @@
 // music player page
 import Link from "next/link";
 import Head from "next/head";
+import Image from "next/image";
+import { useRouter } from "next/router";
 import { GetStaticPaths, GetStaticProps } from "next";
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import { convertDurationToTimeString } from "../../utils/convertDurationToTimeString";
-import Image from "next/image";
 import {
   HiPlay as PlayIcon,
   HiHeart as HeartIcon,
@@ -37,6 +38,8 @@ export default function Episode({ channels }: MusicaDataTypes) {
   const [progress, setProgress] = useState(0);
   const [liked, setLiked] = useState(false);
 
+  const router = useRouter();
+
   useEffect(() => {
     setMusic(channels);
   }, [channels]);
@@ -52,7 +55,9 @@ export default function Episode({ channels }: MusicaDataTypes) {
       </Head>
       <div className={styles.episodeContainer}>
         <div className={styles.episodeHeader}>
-          <Link href="/">
+          <Link href="" onClick={() => {
+            router.back();
+          }}>
             <a>
               <ArrowLeftIcon size={32} color="#fff" />
             </a>
