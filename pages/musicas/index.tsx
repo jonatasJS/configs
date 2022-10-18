@@ -37,6 +37,8 @@ export default function Musica({ channels }: { channels: MusicProps[] }) {
             <Link href={`/musicas/${channel.channel_id}`} key={channel.channel_id}>
               <a className={styles.card}>
                 <Image
+                  width={300}
+                  height={300}
                   src={channel.cover}
                   alt={channel.title}
                 />
