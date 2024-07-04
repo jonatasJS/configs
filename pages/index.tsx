@@ -109,7 +109,7 @@ function Home({ dataAudio }: { dataAudio: MusicaDataTypes }): JSX.Element {
         >
           <Image
             src="http://pa1.narvii.com/6403/de2d49ca4dab24fd88c6e4e40431692c7ea8ac51_00.gif"
-            alt="Loading"
+            alt="Loading..."
             width={320}
             height={181}
           />
