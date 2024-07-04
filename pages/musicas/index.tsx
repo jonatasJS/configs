@@ -50,11 +50,13 @@ export default function Musica({ channels }: { channels: MusicProps[] }) {
             >
               <a className={styles.card}>
                 <img
-                  width={300}
-                  height={300}
+        style={{
+          width: "100%",
+          height: "100%"
+        }}
                   src={channel.cover}
                   alt={channel.title}
-                />
+                /> 
                 <h3>{channel.title}</h3>
                 <p>{channel.artist}</p>
               </a>
