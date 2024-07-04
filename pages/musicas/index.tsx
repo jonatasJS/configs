@@ -49,7 +49,7 @@ export default function Musica({ channels }: { channels: MusicProps[] }) {
               key={channel.channel_id}
             >
               <a className={styles.card}>
-                <Image
+                <img
                   width={300}
                   height={300}
                   src={channel.cover}
